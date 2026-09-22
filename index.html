@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Capacity Planner — Zion Tech Group</title>
+<style>
+:root{--bg:#0a0e1a;--card:#131827;--accent:#4f8cff;--accent2:#7c5cff;--text:#e4e8f0;--muted:#8b95a8;--border:#1e2636;--success:#34d399;--warning:#fbbf24;--danger:#f87171}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+.container{max-width:900px;margin:0 auto;padding:2rem 1.5rem}
+header{text-align:center;padding:3rem 0 2rem;border-bottom:1px solid var(--border)}
+header h1{font-size:2.2rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+header p{color:var(--muted);font-size:1.1rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;margin:1.5rem 0}
+.slider-row{display:flex;align-items:center;gap:1rem;margin:1rem 0}
+.slider-row label{width:150px;font-size:.9rem;color:var(--muted)}
+.slider-row input{flex:1;accent-color:var(--accent)}
+.slider-row .val{width:60px;text-align:right;font-weight:700;color:var(--accent)}
+.btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:.8rem 2rem;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:1rem}
+.btn:hover{opacity:.9}
+.chart{margin:1.5rem 0}
+.chart-bar{display:flex;align-items:center;gap:.5rem;margin:.5rem 0}
+.chart-label{width:120px;font-size:.85rem;color:var(--muted);text-align:right}
+.chart-track{flex:1;height:32px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative;border:1px solid var(--border)}
+.chart-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:.5rem;font-size:.75rem;font-weight:600;color:#fff}
+.alert-box{background:rgba(248,113,113,.1);border:1px solid var(--danger);border-radius:12px;padding:1rem;margin:1rem 0;display:none}
+.alert-box h3{color:var(--danger);font-size:1rem;margin-bottom:.3rem}
+.alert-box p{color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>AI Capacity Planner</h1>
+<p>Predict infrastructure capacity needs — compute, storage, and network growth forecasting with ML-driven recommendations.</p>
+</header>
+<div class="card">
+<h2>Current Infrastructure Profile</h2>
+<div class="slider-row"><label>Servers (VMs)</label><input type="range" min="1" max="500" value="50" id="servers" oninput="this.nextElementSibling.textContent=this.value"><span class="val">50</span></div>
+<div class="slider-row"><label>Storage (TB)</label><input type="range" min="1" max="500" value="20" id="storage" oninput="this.nextElementSibling.textContent=this.value"><span class="val">20</span></div>
+<div class="slider-row"><label>Network (Gbps)</label><input type="range" min="1" max="100" value="10" id="network" oninput="this.nextElementSibling.textContent=this.value"><span class="val">10</span></div>
+<div class="slider-row"><label>Growth Rate (%/yr)</label><input type="range" min="5" max="100" value="25" id="growth" oninput="this.nextElementSibling.textContent=this.value"><span class="val">25</span></div>
+<div class="slider-row"><label>Forecast (years)</label><input type="range" min="1" max="5" value="3" id="years" oninput="this.nextElementSibling.textContent=this.value"><span class="val">3</span></div>
+<button class="btn" onclick="forecast()">Generate Forecast</button>
+<div class="alert-box" id="alertBox"><h3>⚠ Capacity Alert</h3><p id="alertText"></p></div>
+<div class="chart" id="chart"></div>
+</div>
+</div>
+<script>
+function forecast(){
+const servers=parseInt(document.getElementById('servers').value);
+const storage=parseInt(document.getElementById('storage').value);
+const network=parseInt(document.getElementById('network').value);
+const growth=parseInt(document.getElementById('growth').value)/100;
+const years=parseInt(document.getElementById('years').value);
+const chart=document.getElementById('chart');
+const alertBox=document.getElementById('alertBox');
+const alertText=document.getElementById('alertText');
+chart.innerHTML='<h3 style="font-size:1rem;margin-bottom:1rem">Capacity Forecast ('+years+' years)</h3>';
+const metrics=[
+{name:'Servers',current:servers,growth:growth,color:'var(--accent)',unit:'VMs'},
+{name:'Storage',current:storage,growth:growth*1.2,color:'var(--accent2)',unit:'TB'},
+{name:'Network',current:network,growth:growth*0.8,color:'var(--warning)',unit:'Gbps'},
+];
+let alerts=[];
+metrics.forEach(m=>{
+const vals=[];
+for(let i=0;i<=years;i++){vals.push(Math.round(m.current*Math.pow(1+m.growth,i)))}
+const maxVal=Math.max(...vals);
+vals.forEach((v,i)=>{
+const pct=(v/maxVal)*100;
+const alert=pct>85?' ⚠':'';
+chart.innerHTML+=`<div class="chart-bar"><span class="chart-label">Y${i} ${m.name}</span><div class="chart-track"><div class="chart-fill" style="width:${Math.max(pct,10)}%;background:${m.color}">${v.toLocaleString()} ${m.unit}${alert}</div></div></div>`;
+if(i===years&&pct>75)alerts.push(`${m.name} at ${pct.toFixed(0)}% projected utilization by Year ${i}`);
+});
+});
+if(alerts.length){
+alertBox.style.display='block';
+alertText.innerHTML=alerts.join('<br>');
+}else{
+alertBox.style.display='none';
+}
+}
+forecast();
+</script>
+</body>
+</html>
