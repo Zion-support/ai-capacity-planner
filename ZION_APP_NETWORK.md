@@ -1,15 +1,13 @@
-# 🔗 Zion AI App Network
+# Part of the Zion AI App Network
 
-Part of the **Zion AI App Network** — 800+ interlinked AI apps, tools and playbooks by [Zion Tech Group](https://ziontechgroup.com).
+This app is a member of the Zion AI App Network — 360+ interlinked AI micro-apps by Zion Tech Group.
 
-- 🏠 Home: https://ziontechgroup.com
-- 🗂️ Directory: https://ziontechgroup.com/zion-app-network/
-- 🐙 Hub: https://github.com/Zion-support/zion-app-network
-- 🌐 Live app: https://ziontechgroup.com/ai-capacity-planner/
-- 🔗 Related: [Zion AI Capacity Forecaster](https://ziontechgroup.com/zion-ai-capacity-forecaster/) · [Cloud Cost Estimator](https://ziontechgroup.com/cloud-cost-estimator/) · [Discovery](https://ziontechgroup.com/discovery/)
+## Explore the network
+- Network hub: https://zion-support.github.io/zion-network/
+- Full apps showcase: https://ziontechgroup.com/apps/network.html
+- Free AI Discovery (instant app recommendations, results emailed to you): https://ziontechgroup.com/discovery/
+- Discovery benefits: https://ziontechgroup.com/apps/discovery-benefits.html
+- Plans & pricing: https://ziontechgroup.com/en/plans/
+- Main site: https://ziontechgroup.com
 
-## 🏗️ Batch 73 — Infrastructure, Supply & Continuity AI (Oct 4, 2026)
-- Suite: [AI Carbon Tracker](https://ziontechgroup.com/ai-carbon-tracker/) · [AI Cluster Manager](https://ziontechgroup.com/ai-cluster-manager/) · [AI Inventory Forecaster](https://ziontechgroup.com/ai-inventory-forecaster/) · [AI Procurement Copilot](https://ziontechgroup.com/ai-procurement-copilot/) · [AI Capacity Planner](https://ziontechgroup.com/ai-capacity-planner/) · [AI Infrastructure Monitor](https://ziontechgroup.com/ai-infrastructure-monitor/) · [AI Vendor Comparator](https://ziontechgroup.com/ai-vendor-comparator/) · [AI Backup Integrity](https://ziontechgroup.com/ai-backup-integrity/)
-- Spotlight: https://github.com/Zion-support/zion-app-network/blob/main/SPOTLIGHT-2026-10-04-BATCH73.md · Showcase: https://ziontechgroup.com/zion-app-network/app-network-batch73-oct03.html
-
-© 2026 Zion Tech Group.
+Contact: commercial@ziontechgroup.com
